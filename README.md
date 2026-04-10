@@ -42,7 +42,7 @@ To generate the accuracy and F1-scores for the comparative study:
 
 * **CNN Baseline:** Run `cnn_baseline_study.py`
   
-  *Outputs:* CNN Accuracy ($90.6\%$), F1-Score ($0.80$).
+  *Outputs:* CNN Accuracy ($90.3\%$), F1-Score ($0.77$).
 
 * **ViT Baseline:** Run `vit_baseline_study.py`
   
@@ -104,7 +104,7 @@ To reproduce the Map Sparsity distribution comparison:
 
    - *Action:* Trains CNN internally, computes Hoyer sparsity for both NMF and Grad-CAM heatmaps using identical max-normalisation to $[0,1]$ prior to computation.
 
-   - *Outputs:* Median Map Sparsity: NMF 0.74 (std 0.08) vs. Grad-CAM 0.37 (std 0.15) across 180 test recordings.
+   - *Outputs:* Median Map Sparsity: NMF 0.74 (std 0.08) vs. Grad-CAM 0.39 (std 0.15) across 180 test recordings.
 
    - *Saves:* `Fig_Sparsity_Dist.png`
 
