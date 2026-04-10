@@ -1,13 +1,17 @@
 # Program Name: reviewer_exp1_crossval_divergence.py
-# Version: 1.0
-# Description: Addresses Reviewer 1, Comments 2 and 3.
-#   R1.2 - Controlled comparison of KL vs Frobenius vs Beta-divergence NMF.
-#   R1.3 - Replace 70/30 single split with stratified 5-fold cross-validation.
+# Version: 2.0 (Final Submission)
+# Description: Implements the core methodology and validation for the paper.
+#              Performs two primary experiments:
+#              1. Divergence Ablation: Compares KL, Frobenius, and Beta-divergence NMF 
+#                 to justify the selection of the Kullback-Leibler formulation.
+#              2. 5-Fold Cross-Validation: Evaluates the proposed Sparsity-Constrained 
+#                 NMF tokenization method using stratified, recording-level splits.
 #
 # Outputs:
-#   - Table: Divergence comparison (Recon Error, Spectral Conc, Accuracy) -> fills Table 2 in paper
-#   - Table: 5-fold CV results with mean±std for ALL methods -> fills revised Table 1 in paper
-#   - File:  cv_results.npz  (save for use in Program 3)
+#   - Table: Divergence comparison metrics (Recon Error, Spectral Conc, Accuracy).
+#   - Table: 5-fold CV results with mean ± std for the proposed method.
+#   - File:  cv_results.npz (Saves fold metrics for downstream statistical testing).
+
 
 import os
 import numpy as np

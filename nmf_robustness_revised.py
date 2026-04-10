@@ -1,16 +1,15 @@
 # Program Name: nmf_robustness_revised.py
-# Version: 1.0
-# Description: Revised robustness experiment for IEEE SPL resubmission.
-#              Fixes five problems in the original nmf_experiments.py:
-#              1. Baseline curve was mocked (0.85x scaling) — now real NMF run.
-#              2. Inconsistent NMF settings between proposed and baseline — now matched.
-#              3. Missing normalization on noisy spectrogram in baseline — now fixed.
-#              4. Greedy atom matching — replaced with Hungarian algorithm.
-#              5. Single file only — now averaged across N_FILES files.
+# Version: 2.0 (Final Submission)
+# Description: Evaluates the robustness of NMF atoms under Additive White 
+#              Gaussian Noise (AWGN) across various SNR levels.
+#              - Compares Sparsity-Constrained NMF vs. Standard unconstrained NMF.
+#              - Uses the Hungarian algorithm for optimal atom alignment across noise levels.
+#              - Averages stability metrics across a subset of recordings for statistical rigor.
 #
 # Outputs:
-#   - Printed table: stability values at each SNR for both methods
-#   - Fig2_Robustness_Revised.png  (replaces original Fig2_Robustness.png)
+#   - Printed table: Stability values (cosine similarity) at each SNR.
+#   - Fig2_Robustness_Revised.png (Plots the stability degradation curves).
+
 
 import os
 import numpy as np

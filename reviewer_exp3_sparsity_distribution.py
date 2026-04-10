@@ -1,15 +1,20 @@
-# Program Name: reviewer_exp3_sparsity_distribution.py
-# Version: 1.1
-# Description: Addresses Reviewer 1, Comment 6.
-#   R1.6 - Ensure identical max-normalization for both NMF and Grad-CAM heatmaps
-#           before computing Hoyer sparsity.
-#         - Report distribution of Map Sparsity across all test recordings,
-#           not just a single example.
-#         - Produces Fig_Sparsity_Dist.png (box + violin plot) for the paper.
+# Program Name: nmf_sparsity_distribution.py
+# Version: 2.0 (Final Submission)
+# Description: Evaluates the structural interpretability of the proposed method by 
+#              comparing the distribution of Map Sparsity across the test set.
+#              - Computes Hoyer sparsity for both NMF-derived heatmaps and 
+#                CNN Grad-CAM baselines.
+#              - Enforces strict, identical max-normalization for both methods 
+#                prior to computation to ensure mathematically rigorous comparisons.
+#              - Averages sparsity across all test recordings to prove consistency.
 #
 # Prerequisites:
-#   - PhysioNet 2016 data at CONF['BASE_PATH']
-#   - Trains a fresh CNN internally (matches cnn_rebuild_and_gradcam.py architecture)
+#   - PhysioNet 2016 dataset located at CONF['BASE_PATH'].
+#   - Trains a baseline CNN internally for the Grad-CAM comparison.
+#
+# Outputs:
+#   - Fig_Sparsity_Dist.png (Violin + Box plot of the sparsity distributions).
+#   - Console logs of the median Map Sparsity and Wilcoxon p-value.
 
 import os
 import numpy as np

@@ -3,7 +3,7 @@
 # Description: Implements Harmonic-Percussive Source Separation (HPSS) Baseline.
 #              1. Separates Audio into Harmonic (Murmurs) and Percussive (Beats).
 #              2. Stacks them as a 2-Channel Image (Channel 1: H, Channel 2: P).
-#              3. Trains a model to see if this "Fixed" separation is better than NMF.
+#              3. Trains a CNN on these fixed channels to benchmark against dynamically learned NMF atoms.
 
 import os
 import numpy as np
