@@ -61,45 +61,36 @@ To generate the accuracy and F1-scores for the comparative study:
 
 Three metrics quantify physical interpretability:
 
+* **Spectral Concentration (Eq. 2):** Ratio of ℓ₁-normalised energy in the 20–400 Hz clinical band to total atom energy. Computed within `reviewer_exp1_crossval_divergence.py`.
 
+* **Atom Sparsity Index:** Hoyer sparsity of activation matrix H. Computed within `reviewer_exp1_crossval_divergence.py`.
 
-* **Spectral Concentration (Eq. 2):** Ratio of $\\ell\_1$-normalised energy in the 20–400 Hz clinical band to total atom energy. Computed within `reviewer\_exp1\_crossval\_divergence.py`.
-
-* **Atom Sparsity Index:** Hoyer sparsity of activation matrix $H$. Computed within `reviewer\_exp1\_crossval\_divergence.py`.
-
-* **Temporal Regularity (Eq. 3):** Ratio of DFT energy in the 0.8–4 Hz heart-rate band to total activation energy. Computed within `nmf\_experiments.py`.
-
+* **Temporal Regularity (Eq. 3):** Ratio of DFT energy in the 0.8–4 Hz heart-rate band to total activation energy. Computed within `nmf_experiments.py`.
 
 
 ## 5. Divergence Comparison (Table II)
 
 To reproduce the KL vs. Frobenius vs. Beta-divergence ablation:
 
+* Run `reviewer_exp1_crossval_divergence.py`
 
+  *Outputs:* Reconstruction error and Spectral Concentration for each divergence measure on a held-out subset (n=500).
 
-* Run `reviewer\_exp1\_crossval\_divergence.py`
-
-&nbsp;   * *Outputs:* Reconstruction error and Spectral Concentration for each divergence measure on a held-out subset ($n=500$).
-
-&nbsp;   * *Note:* Reconstruction errors are computed under each method's own divergence and are not directly comparable across rows.
-
-
+  *Note:* Reconstruction errors are computed under each method's own divergence and are not directly comparable across rows.
+  
 
 ## 6. Noise Robustness Analysis (Section IV-C)
 
 To reproduce the atom stability experiment:
 
+* Run `nmf_robustness_revised.py`
 
+  *Outputs:* Hungarian-matched cosine similarity at each SNR level, averaged over 200 recordings, for both sparsity-constrained and unconstrained NMF.
 
-* Run `nmf\_robustness\_revised.py`
+  *Key Result:* Both methods exhibit comparable stability (0.60 ± 0.08 at 0 dB), indicating that stability is governed by dominant PCG spectral structure rather than the sparsity penalty.
 
-&nbsp;   * *Outputs:* Hungarian-matched cosine similarity at each SNR level, averaged over $n=200$ recordings, for both sparsity-constrained and unconstrained NMF.
-
-&nbsp;   * *Key Result:* Both methods exhibit comparable stability ($0.60 \\pm 0.08$ at 0 dB), indicating that stability is governed by dominant PCG spectral structure rather than the sparsity penalty.
-
-&nbsp;   * *Saves:* `Fig2\_Robustness\_Revised.png`
-
-
+  *Saves:* `Fig2_Robustness_Revised.png`
+  
 
 **Note on atom matching:** NMF solutions are permutation-invariant. Prior to computing cosine similarity, atoms across clean and noisy runs are aligned using the Hungarian algorithm (`scipy.optimize.linear\_sum\_assignment`) on the pairwise cosine similarity matrix, ensuring consistent one-to-one correspondence.
 
@@ -109,22 +100,18 @@ To reproduce the atom stability experiment:
 
 To reproduce the Map Sparsity distribution comparison:
 
+1. **Generate CNN Heatmaps and NMF Maps:** Run `reviewer_exp3_sparsity_distribution.py`
+
+   - *Action:* Trains CNN internally, computes Hoyer sparsity for both NMF and Grad-CAM heatmaps using identical max-normalisation to $[0,1]$ prior to computation.
+
+   - *Outputs:* Median Map Sparsity: NMF 0.74 (std 0.08) vs. Grad-CAM 0.37 (std 0.15) across 180 test recordings.
+
+   - *Saves:* `Fig_Sparsity_Dist.png`
 
 
-1. **Generate CNN Heatmaps and NMF Maps:** Run `reviewer\_exp3\_sparsity\_distribution.py`
+2. **For single-recording Grad-CAM visualisation:** Run `cnn_rebuild_and_gradcam.py`
 
-&nbsp;   * *Action:* Trains CNN internally, computes Hoyer sparsity for both NMF and Grad-CAM heatmaps using identical max-normalisation to $\[0,1]$ prior to computation.
-
-&nbsp;   * *Outputs:* Median Map Sparsity: NMF $0.74$ (std $0.08$) vs. Grad-CAM $0.37$ (std $0.15$) across $n=180$ test recordings.
-
-&nbsp;   * *Saves:* `Fig\_Sparsity\_Dist.png`
-
-
-
-2. **For single-recording Grad-CAM visualisation:** Run `cnn\_rebuild\_and\_gradcam.py`
-
-&nbsp;   * *Saves:* `gradcam\_comparison.png`
-
+   - *Saves:* `gradcam_comparison.png`
 
 
 ## 8. Figures
@@ -244,25 +231,15 @@ python cnn\_rebuild\_and\_gradcam.py
 ### NMF Configuration (Proposed Method)
 
 ```python
-
-NMF(n\_components=8,                    # K atoms
-
-&nbsp;   solver='mu',                       # Multiplicative update
-
-&nbsp;   beta\_loss='kullback-leibler',      # KL divergence
-
-&nbsp;   init='nndsvda',                    # Deterministic initialisation
-
-&nbsp;   alpha\_H=0.1,                       # Sparsity penalty λ
-
-&nbsp;   l1\_ratio=1.0,
-
-&nbsp;   max\_iter=500,
-
-&nbsp;   random\_state=42)
-
+NMF(n_components=8,                    # K atoms
+    solver='mu',                       # Multiplicative update
+    beta_loss='kullback-leibler',      # KL divergence
+    init='nndsvda',                    # Deterministic initialisation
+    alpha_H=0.1,                       # Sparsity penalty λ
+    l1_ratio=1.0,
+    max_iter=500,
+    random_state=42)
 ```
-
 
 
 ### Random Forest Configuration
@@ -276,19 +253,13 @@ RandomForestClassifier(n\_estimators=100,
 ```
 
 
-
 ### Cross-Validation Configuration
 
 ```python
-
-StratifiedKFold(n\_splits=5,
-
-&nbsp;               shuffle=True,
-
-&nbsp;               random\_state=42)
-
+StratifiedKFold(n_splits=5,
+                shuffle=True,
+                random_state=42)
 ```
-
 
 
 ### Atom Matching (Robustness Experiment)
