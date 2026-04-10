@@ -1,4 +1,4 @@
-# Reproducibility Code for IEEE SPL Resubmission: "Sparsity-Constrained NMF Tokenization for Interpretable Medical Signal Classification"
+# Reproducibility Code for IEEE SPL Submission: "Sparsity-Constrained NMF Tokenization for Interpretable Medical Signal Classification"
 
 
 
@@ -34,31 +34,28 @@ All results are reported using stratified 5-fold cross-validation at the recordi
 
 To generate the accuracy and F1-scores for the comparative study:
 
+* **Proposed Method (NMF + Random Forest) — 5-fold CV:** Run `reviewer_exp1_crossval_divergence.py`
+  
+  *Outputs:* Accuracy ($83.6 \pm 0.9$%), F1-Score ($0.49 \pm 0.03$).
+  
+  *Note:* Also generates Table II (divergence comparison). Runtime ~3 hours on full dataset.
 
+* **CNN Baseline:** Run `cnn_baseline_study.py`
+  
+  *Outputs:* CNN Accuracy ($90.6\%$), F1-Score ($0.80$).
 
-* **Proposed Method (NMF + Random Forest) — 5-fold CV:** Run `reviewer\_exp1\_crossval\_divergence.py`
+* **ViT Baseline:** Run `vit_baseline_study.py`
+  
+  *Outputs:* Standard Vision Transformer Accuracy ($86.2\%$), F1-Score ($0.68$).
 
-&nbsp;   * *Outputs:* Accuracy ($83.6 \\pm 0.9$%), F1-Score ($0.49 \\pm 0.03$).
+* **HPSS Baseline:** Run `hpss_baseline_study.py`
+  
+  *Outputs:* Harmonic-Percussive Source Separation Accuracy ($88.4\%$), F1-Score ($0.74$).
 
-&nbsp;   * *Note:* Also generates Table II (divergence comparison). Runtime ~3 hours on full dataset.
-
-* **CNN Baseline:** Run `cnn\_baseline\_study.py`
-
-&nbsp;   * *Outputs:* CNN Accuracy ($90.6\\%$), F1-Score ($0.80$).
-
-* **ViT Baseline:** Run `vit\_baseline\_study.py`
-
-&nbsp;   * *Outputs:* Standard Vision Transformer Accuracy ($86.2\\%$), F1-Score ($0.68$).
-
-* **HPSS Baseline:** Run `hpss\_baseline\_study.py`
-
-&nbsp;   * *Outputs:* Harmonic-Percussive Source Separation Accuracy ($88.4\\%$), F1-Score ($0.74$).
-
-* **Standard NMF (Unconstrained):** Run `reviewer\_exp1\_crossval\_divergence.py` with `CONF\['SPARSITY'] = 0.0`
-
-&nbsp;   * *Outputs:* Unconstrained NMF Accuracy ($76.5\\%$), F1-Score ($0.38$).
-
-
+* **Standard NMF (Unconstrained):** Run `reviewer_exp1_crossval_divergence.py` with `CONF['SPARSITY'] = 0.0`
+  
+  *Outputs:* Unconstrained NMF Accuracy ($76.5\%$), F1-Score ($0.38$).
+  
 
 ## 4. Signal Processing Metrics (Section II-C)
 
