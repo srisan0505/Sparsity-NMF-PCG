@@ -1,4 +1,4 @@
-\# Reproducibility Code for IEEE SPL Resubmission: "Sparsity-Constrained NMF Tokenization for Interpretable Medical Signal Classification"
+# Reproducibility Code for IEEE SPL Resubmission: "Sparsity-Constrained NMF Tokenization for Interpretable Medical Signal Classification"
 
 
 
@@ -6,23 +6,23 @@ This repository contains the Python scripts required to reproduce the experiment
 
 
 
-\## 1. Setup
+## 1. Setup
 
-\* \*\*Dataset:\*\* PhysioNet 2016 Challenge Dataset (3,541 phonocardiogram recordings).
+* **Dataset:** PhysioNet 2016 Challenge Dataset (3,541 phonocardiogram recordings).
 
-\* \*\*Environment:\*\* Python 3.10+ (Tested on Google Colab, NVIDIA T4 GPU).
+* **Environment:** Python 3.10+ (Tested on Google Colab, NVIDIA T4 GPU).
 
-\* \*\*Dependencies:\*\* `tensorflow`, `librosa`, `numpy`, `pandas`, `scikit-learn`, `matplotlib`, `opencv-python`, `scipy`.
+* **Dependencies:** `tensorflow`, `librosa`, `numpy`, `pandas`, `scikit-learn`, `matplotlib`, `opencv-python`, `scipy`.
 
 
 
-\## 2. Core Methodology
+## 2. Core Methodology
 
 The proposed method follows a two-stage pipeline:
 
-1\. \*\*Stage 1:\*\* Sparsity-constrained KL-NMF decomposes spectrograms into physically meaningful frequency atoms.
+1. **Stage 1:** Sparsity-constrained KL-NMF decomposes spectrograms into physically meaningful frequency atoms.
 
-2\. \*\*Stage 2:\*\* Random Forest classifier operates on temporal-averaged atom activations (8-dimensional features).
+2. **Stage 2:** Random Forest classifier operates on temporal-averaged atom activations (8-dimensional features).
 
 
 
@@ -30,107 +30,107 @@ All results are reported using stratified 5-fold cross-validation at the recordi
 
 
 
-\## 3. Quantitative Results (Table I)
+## 3. Quantitative Results (Table I)
 
 To generate the accuracy and F1-scores for the comparative study:
 
 
 
-\* \*\*Proposed Method (NMF + Random Forest) — 5-fold CV:\*\* Run `reviewer\_exp1\_crossval\_divergence.py`
+* **Proposed Method (NMF + Random Forest) — 5-fold CV:** Run `reviewer\_exp1\_crossval\_divergence.py`
 
-&nbsp;   \* \*Outputs:\* Accuracy ($83.6 \\pm 0.9$%), F1-Score ($0.49 \\pm 0.03$).
+&nbsp;   * *Outputs:* Accuracy ($83.6 \\pm 0.9$%), F1-Score ($0.49 \\pm 0.03$).
 
-&nbsp;   \* \*Note:\* Also generates Table II (divergence comparison). Runtime ~3 hours on full dataset.
+&nbsp;   * *Note:* Also generates Table II (divergence comparison). Runtime ~3 hours on full dataset.
 
-\* \*\*CNN Baseline:\*\* Run `cnn\_baseline\_study.py`
+* **CNN Baseline:** Run `cnn\_baseline\_study.py`
 
-&nbsp;   \* \*Outputs:\* CNN Accuracy ($90.6\\%$), F1-Score ($0.80$).
+&nbsp;   * *Outputs:* CNN Accuracy ($90.6\\%$), F1-Score ($0.80$).
 
-\* \*\*ViT Baseline:\*\* Run `vit\_baseline\_study.py`
+* **ViT Baseline:** Run `vit\_baseline\_study.py`
 
-&nbsp;   \* \*Outputs:\* Standard Vision Transformer Accuracy ($86.2\\%$), F1-Score ($0.68$).
+&nbsp;   * *Outputs:* Standard Vision Transformer Accuracy ($86.2\\%$), F1-Score ($0.68$).
 
-\* \*\*HPSS Baseline:\*\* Run `hpss\_baseline\_study.py`
+* **HPSS Baseline:** Run `hpss\_baseline\_study.py`
 
-&nbsp;   \* \*Outputs:\* Harmonic-Percussive Source Separation Accuracy ($88.4\\%$), F1-Score ($0.74$).
+&nbsp;   * *Outputs:* Harmonic-Percussive Source Separation Accuracy ($88.4\\%$), F1-Score ($0.74$).
 
-\* \*\*Standard NMF (Unconstrained):\*\* Run `reviewer\_exp1\_crossval\_divergence.py` with `CONF\['SPARSITY'] = 0.0`
+* **Standard NMF (Unconstrained):** Run `reviewer\_exp1\_crossval\_divergence.py` with `CONF\['SPARSITY'] = 0.0`
 
-&nbsp;   \* \*Outputs:\* Unconstrained NMF Accuracy ($76.5\\%$), F1-Score ($0.38$).
+&nbsp;   * *Outputs:* Unconstrained NMF Accuracy ($76.5\\%$), F1-Score ($0.38$).
 
 
 
-\## 4. Signal Processing Metrics (Section II-C)
+## 4. Signal Processing Metrics (Section II-C)
 
 Three metrics quantify physical interpretability:
 
 
 
-\* \*\*Spectral Concentration (Eq. 2):\*\* Ratio of $\\ell\_1$-normalised energy in the 20–400 Hz clinical band to total atom energy. Computed within `reviewer\_exp1\_crossval\_divergence.py`.
+* **Spectral Concentration (Eq. 2):** Ratio of $\\ell\_1$-normalised energy in the 20–400 Hz clinical band to total atom energy. Computed within `reviewer\_exp1\_crossval\_divergence.py`.
 
-\* \*\*Atom Sparsity Index:\*\* Hoyer sparsity of activation matrix $H$. Computed within `reviewer\_exp1\_crossval\_divergence.py`.
+* **Atom Sparsity Index:** Hoyer sparsity of activation matrix $H$. Computed within `reviewer\_exp1\_crossval\_divergence.py`.
 
-\* \*\*Temporal Regularity (Eq. 3):\*\* Ratio of DFT energy in the 0.8–4 Hz heart-rate band to total activation energy. Computed within `nmf\_experiments.py`.
+* **Temporal Regularity (Eq. 3):** Ratio of DFT energy in the 0.8–4 Hz heart-rate band to total activation energy. Computed within `nmf\_experiments.py`.
 
 
 
-\## 5. Divergence Comparison (Table II)
+## 5. Divergence Comparison (Table II)
 
 To reproduce the KL vs. Frobenius vs. Beta-divergence ablation:
 
 
 
-\* Run `reviewer\_exp1\_crossval\_divergence.py`
+* Run `reviewer\_exp1\_crossval\_divergence.py`
 
-&nbsp;   \* \*Outputs:\* Reconstruction error and Spectral Concentration for each divergence measure on a held-out subset ($n=500$).
+&nbsp;   * *Outputs:* Reconstruction error and Spectral Concentration for each divergence measure on a held-out subset ($n=500$).
 
-&nbsp;   \* \*Note:\* Reconstruction errors are computed under each method's own divergence and are not directly comparable across rows.
+&nbsp;   * *Note:* Reconstruction errors are computed under each method's own divergence and are not directly comparable across rows.
 
 
 
-\## 6. Noise Robustness Analysis (Section IV-C)
+## 6. Noise Robustness Analysis (Section IV-C)
 
 To reproduce the atom stability experiment:
 
 
 
-\* Run `nmf\_robustness\_revised.py`
+* Run `nmf\_robustness\_revised.py`
 
-&nbsp;   \* \*Outputs:\* Hungarian-matched cosine similarity at each SNR level, averaged over $n=200$ recordings, for both sparsity-constrained and unconstrained NMF.
+&nbsp;   * *Outputs:* Hungarian-matched cosine similarity at each SNR level, averaged over $n=200$ recordings, for both sparsity-constrained and unconstrained NMF.
 
-&nbsp;   \* \*Key Result:\* Both methods exhibit comparable stability ($0.60 \\pm 0.08$ at 0 dB), indicating that stability is governed by dominant PCG spectral structure rather than the sparsity penalty.
+&nbsp;   * *Key Result:* Both methods exhibit comparable stability ($0.60 \\pm 0.08$ at 0 dB), indicating that stability is governed by dominant PCG spectral structure rather than the sparsity penalty.
 
-&nbsp;   \* \*Saves:\* `Fig2\_Robustness\_Revised.png`
-
-
-
-\*\*Note on atom matching:\*\* NMF solutions are permutation-invariant. Prior to computing cosine similarity, atoms across clean and noisy runs are aligned using the Hungarian algorithm (`scipy.optimize.linear\_sum\_assignment`) on the pairwise cosine similarity matrix, ensuring consistent one-to-one correspondence.
+&nbsp;   * *Saves:* `Fig2\_Robustness\_Revised.png`
 
 
 
-\## 7. Interpretability Analysis (Section IV-D)
+**Note on atom matching:** NMF solutions are permutation-invariant. Prior to computing cosine similarity, atoms across clean and noisy runs are aligned using the Hungarian algorithm (`scipy.optimize.linear\_sum\_assignment`) on the pairwise cosine similarity matrix, ensuring consistent one-to-one correspondence.
+
+
+
+## 7. Interpretability Analysis (Section IV-D)
 
 To reproduce the Map Sparsity distribution comparison:
 
 
 
-1\. \*\*Generate CNN Heatmaps and NMF Maps:\*\* Run `reviewer\_exp3\_sparsity\_distribution.py`
+1. **Generate CNN Heatmaps and NMF Maps:** Run `reviewer\_exp3\_sparsity\_distribution.py`
 
-&nbsp;   \* \*Action:\* Trains CNN internally, computes Hoyer sparsity for both NMF and Grad-CAM heatmaps using identical max-normalisation to $\[0,1]$ prior to computation.
+&nbsp;   * *Action:* Trains CNN internally, computes Hoyer sparsity for both NMF and Grad-CAM heatmaps using identical max-normalisation to $\[0,1]$ prior to computation.
 
-&nbsp;   \* \*Outputs:\* Median Map Sparsity: NMF $0.74$ (std $0.08$) vs. Grad-CAM $0.37$ (std $0.15$) across $n=180$ test recordings.
+&nbsp;   * *Outputs:* Median Map Sparsity: NMF $0.74$ (std $0.08$) vs. Grad-CAM $0.37$ (std $0.15$) across $n=180$ test recordings.
 
-&nbsp;   \* \*Saves:\* `Fig\_Sparsity\_Dist.png`
-
-
-
-2\. \*\*For single-recording Grad-CAM visualisation:\*\* Run `cnn\_rebuild\_and\_gradcam.py`
-
-&nbsp;   \* \*Saves:\* `gradcam\_comparison.png`
+&nbsp;   * *Saves:* `Fig\_Sparsity\_Dist.png`
 
 
 
-\## 8. Figures
+2. **For single-recording Grad-CAM visualisation:** Run `cnn\_rebuild\_and\_gradcam.py`
+
+&nbsp;   * *Saves:* `gradcam\_comparison.png`
+
+
+
+## 8. Figures
 
 | Figure | Filename | Generated By |
 
@@ -146,7 +146,7 @@ To reproduce the Map Sparsity distribution comparison:
 
 
 
-\## 9. Execution Order
+## 9. Execution Order
 
 
 
@@ -154,7 +154,7 @@ Run scripts in the following order for full reproducibility:
 
 
 
-\### Step 1: Mount Google Drive
+### Step 1: Mount Google Drive
 
 ```python
 
@@ -166,7 +166,7 @@ drive.mount('/content/drive')
 
 
 
-\### Step 2: Set Dataset Path
+### Step 2: Set Dataset Path
 
 ```
 
@@ -176,17 +176,17 @@ drive.mount('/content/drive')
 
 
 
-\### Step 3: Run Experiments
+### Step 3: Run Experiments
 
 ```bash
 
-\# Core proposed method — 5-fold CV and divergence comparison (~3 hours)
+# Core proposed method — 5-fold CV and divergence comparison (~3 hours)
 
 python reviewer\_exp1\_crossval\_divergence.py
 
 
 
-\# Baseline models
+# Baseline models
 
 python cnn\_baseline\_study.py
 
@@ -196,25 +196,25 @@ python hpss\_baseline\_study.py
 
 
 
-\# Noise robustness with Hungarian matching (~10 minutes, CPU)
+# Noise robustness with Hungarian matching (~10 minutes, CPU)
 
 python nmf\_robustness\_revised.py
 
 
 
-\# Map Sparsity distribution (~30 minutes, GPU recommended)
+# Map Sparsity distribution (~30 minutes, GPU recommended)
 
 python reviewer\_exp3\_sparsity\_distribution.py
 
 
 
-\# Ablation study
+# Ablation study
 
 python nmf\_ablation\_study.py
 
 
 
-\# Heatmap visualisation
+# Heatmap visualisation
 
 python nmf\_experiments.py
 
@@ -224,7 +224,7 @@ python cnn\_rebuild\_and\_gradcam.py
 
 
 
-\## 10. Expected Runtime
+## 10. Expected Runtime
 
 | Script | Runtime | Hardware |
 
@@ -246,11 +246,11 @@ python cnn\_rebuild\_and\_gradcam.py
 
 
 
-\## 11. Key Implementation Details
+## 11. Key Implementation Details
 
 
 
-\### NMF Configuration (Proposed Method)
+### NMF Configuration (Proposed Method)
 
 ```python
 
@@ -274,7 +274,7 @@ NMF(n\_components=8,                    # K atoms
 
 
 
-\### Random Forest Configuration
+### Random Forest Configuration
 
 ```python
 
@@ -286,7 +286,7 @@ RandomForestClassifier(n\_estimators=100,
 
 
 
-\### Cross-Validation Configuration
+### Cross-Validation Configuration
 
 ```python
 
@@ -300,43 +300,43 @@ StratifiedKFold(n\_splits=5,
 
 
 
-\### Atom Matching (Robustness Experiment)
+### Atom Matching (Robustness Experiment)
 
 ```python
 
 from scipy.optimize import linear\_sum\_assignment
 
-\# Build K×K pairwise cosine similarity matrix
+# Build K×K pairwise cosine similarity matrix
 
-\# Solve: row\_ind, col\_ind = linear\_sum\_assignment(-sim\_matrix)
+# Solve: row\_ind, col\_ind = linear\_sum\_assignment(-sim\_matrix)
 
 ```
 
 
 
-\## 12. Troubleshooting
+## 12. Troubleshooting
 
 
 
-\*\*Issue:\*\* `ConvergenceWarning` during NMF
+**Issue:** `ConvergenceWarning` during NMF
 
-\* \*\*Solution:\*\* `max\_iter=500` is already set. Suppress with `warnings.filterwarnings("ignore", category=ConvergenceWarning)`.
-
-
-
-\*\*Issue:\*\* "No files found" error
-
-\* \*\*Solution:\*\* Verify dataset path in `CONF\['BASE\_PATH']`.
+* **Solution:** `max\_iter=500` is already set. Suppress with `warnings.filterwarnings("ignore", category=ConvergenceWarning)`.
 
 
 
-\*\*Issue:\*\* Keras 3 compatibility errors
+**Issue:** "No files found" error
 
-\* \*\*Solution:\*\* Ensure TensorFlow 2.19.0+ and Keras 3.10.0+ are installed.
+* **Solution:** Verify dataset path in `CONF\['BASE\_PATH']`.
 
 
 
-\*\*Issue:\*\* Colab session disconnects during long runs
+**Issue:** Keras 3 compatibility errors
 
-\* \*\*Solution:\*\* All new scripts save outputs to Drive immediately after generation. Re-running will overwrite safely.
+* **Solution:** Ensure TensorFlow 2.19.0+ and Keras 3.10.0+ are installed.
+
+
+
+**Issue:** Colab session disconnects during long runs
+
+* **Solution:** All new scripts save outputs to Drive immediately after generation. Re-running will overwrite safely.
 
