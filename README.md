@@ -153,76 +153,42 @@ drive.mount('/content/drive')
 ```
 
 
-
 ### Step 3: Run Experiments
 
 ```bash
-
 # Core proposed method — 5-fold CV and divergence comparison (~3 hours)
-
-python reviewer\_exp1\_crossval\_divergence.py
-
-
+python reviewer_exp1_crossval_divergence.py
 
 # Baseline models
-
-python cnn\_baseline\_study.py
-
-python vit\_baseline\_study.py
-
-python hpss\_baseline\_study.py
-
-
+python cnn_baseline_study.py
+python vit_baseline_study.py
+python hpss_baseline_study.py
 
 # Noise robustness with Hungarian matching (~10 minutes, CPU)
-
-python nmf\_robustness\_revised.py
-
-
+python nmf_robustness_revised.py
 
 # Map Sparsity distribution (~30 minutes, GPU recommended)
-
-python reviewer\_exp3\_sparsity\_distribution.py
-
-
+python reviewer_exp3_sparsity_distribution.py
 
 # Ablation study
-
-python nmf\_ablation\_study.py
-
-
+python nmf_ablation_study.py
 
 # Heatmap visualisation
-
-python nmf\_experiments.py
-
-python cnn\_rebuild\_and\_gradcam.py
-
+python nmf_experiments.py
+python cnn_rebuild_and_gradcam.py
 ```
-
-
 
 ## 10. Expected Runtime
 
 | Script | Runtime | Hardware |
-
-|---|---|---|
-
-| `reviewer\_exp1\_crossval\_divergence.py` | ~3 hours | CPU |
-
-| `cnn\_baseline\_study.py` | ~10 minutes | GPU |
-
-| `vit\_baseline\_study.py` | ~15 minutes | GPU |
-
-| `hpss\_baseline\_study.py` | ~5 minutes | GPU |
-
-| `nmf\_robustness\_revised.py` | ~10 minutes | CPU |
-
-| `reviewer\_exp3\_sparsity\_distribution.py` | ~30 minutes | GPU recommended |
-
-| `nmf\_ablation\_study.py` | ~5 minutes | CPU |
-
-
+|--------|---------|----------|
+| `reviewer_exp1_crossval_divergence.py` | ~3 hours | CPU |
+| `cnn_baseline_study.py` | ~10 minutes | GPU |
+| `vit_baseline_study.py` | ~15 minutes | GPU |
+| `hpss_baseline_study.py` | ~5 minutes | GPU |
+| `nmf_robustness_revised.py` | ~10 minutes | CPU |
+| `reviewer_exp3_sparsity_distribution.py` | ~30 minutes | GPU recommended |
+| `nmf_ablation_study.py` | ~5 minutes | CPU |
 
 ## 11. Key Implementation Details
 
@@ -241,17 +207,12 @@ NMF(n_components=8,                    # K atoms
     random_state=42)
 ```
 
-
 ### Random Forest Configuration
 
 ```python
-
-RandomForestClassifier(n\_estimators=100,
-
-&nbsp;                      random\_state=42)
-
+RandomForestClassifier(n_estimators=100,
+                       random_state=42)
 ```
-
 
 ### Cross-Validation Configuration
 
@@ -261,36 +222,24 @@ StratifiedKFold(n_splits=5,
                 random_state=42)
 ```
 
-
 ### Atom Matching (Robustness Experiment)
 
 ```python
-
-from scipy.optimize import linear\_sum\_assignment
+from scipy.optimize import linear_sum_assignment
 
 # Build K×K pairwise cosine similarity matrix
-
-# Solve: row\_ind, col\_ind = linear\_sum\_assignment(-sim\_matrix)
-
+# Solve: row_ind, col_ind = linear_sum_assignment(-sim_matrix)
 ```
-
-
 
 ## 12. Troubleshooting
 
-
-
 **Issue:** `ConvergenceWarning` during NMF
 
-* **Solution:** `max\_iter=500` is already set. Suppress with `warnings.filterwarnings("ignore", category=ConvergenceWarning)`.
-
-
+* **Solution:** `max_iter=500` is already set. Suppress with `warnings.filterwarnings("ignore", category=ConvergenceWarning)`.
 
 **Issue:** "No files found" error
 
-* **Solution:** Verify dataset path in `CONF\['BASE\_PATH']`.
-
-
+* **Solution:** Verify dataset path in `CONF['BASE_PATH']`.
 
 **Issue:** Keras 3 compatibility errors
 
