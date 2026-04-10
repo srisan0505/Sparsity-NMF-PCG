@@ -34,7 +34,7 @@ All results are reported using stratified 5-fold cross-validation at the recordi
 
 To generate the accuracy and F1-scores for the comparative study:
 
-* **Proposed Method (NMF + Random Forest) — 5-fold CV:** Run `reviewer_exp1_crossval_divergence.py`
+* **Proposed Method (NMF + Random Forest) — 5-fold CV:** Run `nmf_crossval_divergence.py`
   
   *Outputs:* Accuracy ($83.6 \pm 0.9$%), F1-Score ($0.49 \pm 0.03$).
   
@@ -52,7 +52,7 @@ To generate the accuracy and F1-scores for the comparative study:
   
   *Outputs:* Harmonic-Percussive Source Separation Accuracy ($88.4\%$), F1-Score ($0.74$).
 
-* **Standard NMF (Unconstrained):** Run `reviewer_exp1_crossval_divergence.py` with `CONF['SPARSITY'] = 0.0`
+* **Standard NMF (Unconstrained):** Run `nmf_crossval_divergence.py` with `CONF['SPARSITY'] = 0.0`
   
   *Outputs:* Unconstrained NMF Accuracy ($76.5\%$), F1-Score ($0.38$).
   
@@ -61,9 +61,9 @@ To generate the accuracy and F1-scores for the comparative study:
 
 Three metrics quantify physical interpretability:
 
-* **Spectral Concentration (Eq. 2):** Ratio of ℓ₁-normalised energy in the 20–400 Hz clinical band to total atom energy. Computed within `reviewer_exp1_crossval_divergence.py`.
+* **Spectral Concentration (Eq. 2):** Ratio of ℓ₁-normalised energy in the 20–400 Hz clinical band to total atom energy. Computed within `nmf_crossval_divergence.py`.
 
-* **Atom Sparsity Index:** Hoyer sparsity of activation matrix H. Computed within `reviewer_exp1_crossval_divergence.py`.
+* **Atom Sparsity Index:** Hoyer sparsity of activation matrix H. Computed within `nmf_crossval_divergence.py`.
 
 * **Temporal Regularity (Eq. 3):** Ratio of DFT energy in the 0.8–4 Hz heart-rate band to total activation energy. Computed within `nmf_experiments.py`.
 
@@ -72,7 +72,7 @@ Three metrics quantify physical interpretability:
 
 To reproduce the KL vs. Frobenius vs. Beta-divergence ablation:
 
-* Run `reviewer_exp1_crossval_divergence.py`
+* Run `nmf_crossval_divergence.py`
 
   *Outputs:* Reconstruction error and Spectral Concentration for each divergence measure on a held-out subset (n=500).
 
@@ -92,19 +92,17 @@ To reproduce the atom stability experiment:
   *Saves:* `Fig2_Robustness_Revised.png`
   
 
-**Note on atom matching:** NMF solutions are permutation-invariant. Prior to computing cosine similarity, atoms across clean and noisy runs are aligned using the Hungarian algorithm (`scipy.optimize.linear\_sum\_assignment`) on the pairwise cosine similarity matrix, ensuring consistent one-to-one correspondence.
-
-
+**Note on atom matching:** NMF solutions are permutation-invariant. Prior to computing cosine similarity, atoms across clean and noisy runs are aligned using the Hungarian algorithm (`scipy.optimize.linear_sum_assignment`) on the pairwise cosine similarity matrix, ensuring consistent one-to-one correspondence.
 
 ## 7. Interpretability Analysis (Section IV-D)
 
 To reproduce the Map Sparsity distribution comparison:
 
-1. **Generate CNN Heatmaps and NMF Maps:** Run `reviewer_exp3_sparsity_distribution.py`
+1. **Generate CNN Heatmaps and NMF Maps:** Run `nmf_sparsity_distribution.py`
 
    - *Action:* Trains CNN internally, computes Hoyer sparsity for both NMF and Grad-CAM heatmaps using identical max-normalisation to $[0,1]$ prior to computation.
 
-   - *Outputs:* Median Map Sparsity: NMF 0.74 (std 0.08) vs. Grad-CAM 0.39 (std 0.15) across 180 test recordings.
+   - *Outputs:* Median Map Sparsity: NMF 0.74 (std 0.08) vs. Grad-CAM 0.39 (std 0.15) across 180 test recordings, and the Wilcoxon signed-rank $p$-value confirming statistical significance.
 
    - *Saves:* `Fig_Sparsity_Dist.png`
 
@@ -121,7 +119,7 @@ To reproduce the Map Sparsity distribution comparison:
 | Fig. 1: Atom Stability vs. Noise | `Fig2_Robustness_Revised.png` | `nmf_robustness_revised.py` |
 | Fig. 2: Diagnostic Heatmap | `Fig3_Heatmap.png` | `nmf_experiments.py` |
 | Fig. 3: Ablation Study on Rank K | `Fig4_Ablation.png` | `nmf_ablation_study.py` |
-| Fig. 4: Map Sparsity Distribution | `Fig_Sparsity_Dist.png` | `reviewer_exp3_sparsity_distribution.py` |
+| Fig. 4: Map Sparsity Distribution | `Fig_Sparsity_Dist.png` | `nmf_sparsity_distribution.py` |
 
 
 ## 9. Execution Order
@@ -157,18 +155,21 @@ drive.mount('/content/drive')
 
 ```bash
 # Core proposed method — 5-fold CV and divergence comparison (~3 hours)
-python reviewer_exp1_crossval_divergence.py
+python nmf_crossval_divergence.py
 
 # Baseline models
 python cnn_baseline_study.py
 python vit_baseline_study.py
 python hpss_baseline_study.py
 
+# Calculate Welch's t-test for Table I accuracy trade-off
+python statistical_significance_test.py
+
 # Noise robustness with Hungarian matching (~10 minutes, CPU)
 python nmf_robustness_revised.py
 
 # Map Sparsity distribution (~30 minutes, GPU recommended)
-python reviewer_exp3_sparsity_distribution.py
+python nmf_sparsity_distribution.py
 
 # Ablation study
 python nmf_ablation_study.py
@@ -182,12 +183,12 @@ python cnn_rebuild_and_gradcam.py
 
 | Script | Runtime | Hardware |
 |--------|---------|----------|
-| `reviewer_exp1_crossval_divergence.py` | ~3 hours | CPU |
+| `nmf_crossval_divergence.py` | ~3 hours | CPU |
 | `cnn_baseline_study.py` | ~10 minutes | GPU |
 | `vit_baseline_study.py` | ~15 minutes | GPU |
 | `hpss_baseline_study.py` | ~5 minutes | GPU |
 | `nmf_robustness_revised.py` | ~10 minutes | CPU |
-| `reviewer_exp3_sparsity_distribution.py` | ~30 minutes | GPU recommended |
+| `nmf_sparsity_distribution.py` | ~30 minutes | GPU recommended |
 | `nmf_ablation_study.py` | ~5 minutes | CPU |
 
 ## 11. Key Implementation Details
