@@ -120,7 +120,7 @@ To reproduce the Map Sparsity distribution comparison:
 | Fig. 2: Diagnostic Heatmap | `Heatmap.png` | `nmf_experiments.py` |
 | Fig. 3: Ablation Study on Rank K | `Ablation.png` | `nmf_ablation_study.py` |
 | Map Sparsity Distribution (Supplemental Plot, not in paper)| `Fig_Sparsity_Dist.png` | `nmf_sparsity_distribution.py` |
-| Grad-CAM visualisation (Not in paper) | `gradcam_comparison.png` | `cnn_rebuild_and_gradcam.py` |
+| Grad-CAM visualisation (Supplemental Plot, not in paper) | `gradcam_comparison.png` | `cnn_rebuild_and_gradcam.py` |
 
 ## 9. Execution Order
 
