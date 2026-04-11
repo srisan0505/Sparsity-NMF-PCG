@@ -195,11 +195,11 @@ def plot_robustness(mean_proposed, std_proposed, mean_baseline, std_baseline):
     ax.set_ylim([0.3, 1.0])
     plt.tight_layout()
 
-    plt.savefig('Fig2_Robustness_Revised.png', dpi=300, bbox_inches='tight')
+    plt.savefig('Robustness.png', dpi=300, bbox_inches='tight')
     plt.show()
 
     # Also save to Drive immediately
-    shutil.copy('Fig2_Robustness_Revised.png',
+    shutil.copy('Robustness.png',
                 '/content/drive/MyDrive/PhysioNet2016/Fig2_Robustness_Revised.png')
     print("Saved: Fig2_Robustness_Revised.png (local + Drive)")
 

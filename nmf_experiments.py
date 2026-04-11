@@ -85,7 +85,7 @@ def generate_diagnostic_heatmap(file_path):
     plt.tight_layout()
     
     # Save the figure properly
-    save_path = 'Fig3_Heatmap.png'
+    save_path = 'Heatmap.png'
     plt.savefig(save_path, dpi=300, bbox_inches='tight')
     plt.show()
     

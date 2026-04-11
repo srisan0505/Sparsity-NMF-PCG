@@ -115,8 +115,9 @@ def run_ablation():
     ax2.plot(CONF['K_VALUES'], results_sparsity, 's-', color=color, linewidth=2, label='Sparsity')
     ax2.tick_params(axis='y', labelcolor=color)
 
-    plt.title('Fig. 4. Ablation Study: Selecting Optimal Rank K')
+    plt.title('Ablation Study: Selecting Optimal Rank K')
     fig.tight_layout()  # otherwise the right y-label is slightly clipped
+    plt.savefig(os.path.join(CONF['BASE_PATH'], 'Ablation.png'), dpi=300, bbox_inches='tight')
     plt.show()
 
     print("\n--- ABLATION RESULTS ---")
